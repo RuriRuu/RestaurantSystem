@@ -1,7 +1,6 @@
 package Service;
-
-public class CreditCardPayment {
-    public void pay(int amount) {
-        System.out.println("Paid"+amount+" using GCash");
+class CreditCardPayment implements PaymentStrategy{
+    public void pay() {
+        System.out.println("Payment Method: Credit Card");
     }
 }

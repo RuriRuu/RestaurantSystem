@@ -6,5 +6,5 @@
 *.iml
 *.ipr
 out/
-!**/src/main/**/out/
+!**/src/Service.main/**/out/
 !**/src/test/**/out/

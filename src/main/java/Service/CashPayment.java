@@ -1,7 +1,7 @@
 package Service;
 
-public class CashPayment {
-    public void pay(int amount) {
-        System.out.println("Paid"+amount+" using cash");
+class CashPayment implements PaymentStrategy{
+    public void pay() {
+        System.out.println("Payment Method: Cash");
     }
 }
