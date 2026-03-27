@@ -1,23 +1,28 @@
 package Service;
 
+import javax.sound.midi.Soundbank;
 import java.util.Scanner;
 
 public class main {
     public static void main(String[] args) {
-        askPaymentMethod();
-    }
+        Scanner scan = new Scanner(System.in);
+        KitchenOrderTracker tracker = new KitchenOrderTracker();
 
-    private static void askPaymentMethod() {
+        System.out.print("Enter Name: ");
+        String name = scan.nextLine();
+        Customer customer = new Customer(name);
+        tracker.addObserver(customer);
+
         try{
-            Scanner scan = new Scanner(System.in);
             System.out.println("_______________________");
             System.out.println("Select a Payment Method");
             System.out.println("_______________________");
             System.out.println("1. Cash");
             System.out.println("2. GCash");
             System.out.println("3. Credit Card");
+
+            System.out.print("Choice: ");
             int choice = scan.nextInt();
-            scan.close();
 
             PaymentContext context = new PaymentContext();
 
@@ -41,17 +46,37 @@ public class main {
         }catch (Exception e){
             System.out.println("Error, please try again.");
         }
-    }
 
-    private static void askOrder(){
-        Scanner scan = new Scanner(System.in);
-        System.out.println("___________________");
-        System.out.println("Burger or Pizza?");
-        System.out.println("___________________");
-        System.out.println("1. Burger");
-        System.out.println("2. Pizza");
+        try {
+            System.out.println("___________________");
+            System.out.println("Burger or Pizza?");
+            System.out.println("___________________");
+            System.out.println("1. Burger - 40php");
+            System.out.println("2. Pizza - 555php");
 
-        int choice = scan.nextInt();
+            System.out.print("Choice: ");
+            int choice = scan.nextInt();
+
+            Kitchen kitchen = new Kitchen();
+            Server server = new Server();
+
+            if (choice == 1){
+                server.setOrder(new OrderBurger(kitchen, tracker));
+                server.placeOrder();
+            } else if (choice == 2) {
+                server.setOrder(new OrderPizza(kitchen, tracker));
+                server.placeOrder();
+            } else {
+                System.out.println("Invalid Selection.");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
         scan.close();
     }
+
+
+
+
 }
